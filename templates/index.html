@@ -1,9 +1,30 @@
-<!DOCTYPE html> 
-    <html>
-    <head>
-        <title>My Flask App</title> 
-    </head>
-    <body>
-        <h1>I'm sowndhar!</h1>   
-    </body>
-    </html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Flask App</title>
+</head>
+
+<body>
+    <h1>Hi Hello {{ todos[0]['task'] }}
+    </h1>
+    <ul>
+        {% for item in todos %}
+        <li>
+            <input type="checkbox" {% if item['done'] %} checked {% endif %}
+                onchange="location.href='{{ url_for('check', home=loop.index0) }}'">
+            <span {% if item['done'] %} style="text-decoration: line-through;" {% endif %}>{{ item['task'] }}</span>
+            <a href="{{ url_for('check', home=loop.index0) }}">Check</a>
+            <a href="{{ url_for('edit', home=loop.index0) }}">Edit</a>
+            <a href="{{ url_for('delete', home=loop.index0) }}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+    Form action to add new todo
+    <form action="{{ url_for('add') }}" method="POST">
+        <input type="text" name="todo_task" placeholder="Enter new todo" required>
+        <button type="submit">Add Todo</button>
+    </form>
+</body>
+
+</html>
